@@ -1,0 +1,30 @@
+name: 'AdoreMe Tech PHP STAN Composite Action'
+description: 'Run PHP STAN'
+inputs:
+  php-image:
+    description: 'The PHP image to use'
+    required: true
+  report-path:
+    description: 'PHP STAN report path'
+    required: true
+    default: './build/reports/php-stan.xml'
+
+runs:
+  using: "composite"
+  steps:
+    - name: 'Run PHP STAN'
+      run: $GITHUB_ACTION_PATH/check.sh
+      shell: bash
+      env:
+        INPUT_PHP_IMAGE: ${{ inputs.php-image }}
+        INPUT_REPORT_PATH: ${{ inputs.report-path }}
+    - name: 'Run PHP STAN Report'
+      uses: jwgmeligmeyling/checkstyle-github-action@master
+      with:
+        name: 'PHP STAN'
+        title: 'PHP STAN report'
+        path: ${{ inputs.report-path }}
+    - name: 'TODO: Notify in PR'
+      run: |
+        echo 'PHP STAN Complete'
+      shell: bash
