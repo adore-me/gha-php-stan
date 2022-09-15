@@ -4,11 +4,14 @@ inputs:
   php-image:
     description: 'The PHP image to use'
     required: true
-  report-path:
-    description: 'PHP STAN report path'
+  report-dir:
+    description: 'PHP STAN report directory'
     required: true
-    default: './build/reports/php-stan.xml'
-
+    default: 'build/reports'
+  report-file-name:
+    description: 'PHP STAN report file name'
+    required: true
+    default: 'php-stan.xml'
 runs:
   using: "composite"
   steps:
@@ -17,14 +20,10 @@ runs:
       shell: bash
       env:
         INPUT_PHP_IMAGE: ${{ inputs.php-image }}
-        INPUT_REPORT_PATH: ${{ inputs.report-path }}
+        INPUT_REPORT_PATH: '${{ inputs.report-dir }}/${{ inputs.report-file-name }}'
     - name: 'Run PHP STAN Report'
       uses: jwgmeligmeyling/checkstyle-github-action@master
       with:
         name: 'PHP STAN'
         title: 'PHP STAN report'
-        path: ${{ inputs.report-path }}
-    - name: 'TODO: Notify in PR'
-      run: |
-        echo 'PHP STAN Complete'
-      shell: bash
+        path: '${{ inputs.report-dir }}/${{ inputs.report-file-name }}'
