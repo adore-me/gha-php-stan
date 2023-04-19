@@ -22,7 +22,7 @@ runs:
         INPUT_PHP_IMAGE: ${{ inputs.php-image }}
         INPUT_REPORT_PATH: '${{ inputs.report-dir }}/${{ inputs.report-file-name }}'
     - name: 'Run PHP STAN Report'
-      uses: jwgmeligmeyling/checkstyle-github-action@master
+      uses: adore-me/checkstyle-github-action@v1.0.0
       with:
         name: 'PHP STAN'
         title: 'PHP STAN report'
