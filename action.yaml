@@ -12,6 +12,10 @@ inputs:
     description: 'PHP STAN report file name'
     required: true
     default: 'php-stan.xml'
+  app-dir:
+    description: 'Application directory - use without trailing slash. When empty will try to guess if is `src` or `app`.'
+    required: false
+    default: ''
 runs:
   using: "composite"
   steps:
@@ -21,6 +25,7 @@ runs:
       env:
         INPUT_PHP_IMAGE: ${{ inputs.php-image }}
         INPUT_REPORT_PATH: '${{ inputs.report-dir }}/${{ inputs.report-file-name }}'
+        INPUT_APP_DIR: ${{ inputs.app-dir }}
     - name: 'Run PHP STAN Report'
       uses: adore-me/checkstyle-github-action@v1.0.0
       with:
