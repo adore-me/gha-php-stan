@@ -27,7 +27,13 @@ else
   APP_DIR="$INPUT_APP_DIR"
 fi
 
-CMD="./vendor/bin/phpstan analyse ${APP_DIR} --no-interaction --no-ansi --error-format=checkstyle --memory-limit=512M > ${INPUT_REPORT_PATH} || true"
+if [ -f "./phpstan.neon" ]; then
+  echo -e "${BL}Info:${NC} phpstan config file found.${NC}"
+  CMD="./vendor/bin/phpstan analyse --no-interaction --no-ansi --error-format=checkstyle --memory-limit=512M > ${INPUT_REPORT_PATH} || true"
+else
+  CMD="./vendor/bin/phpstan analyse ${APP_DIR} --no-interaction --no-ansi --error-format=checkstyle --memory-limit=512M > ${INPUT_REPORT_PATH} || true"
+fi
+
 
 echo -e "${BL}Info:${NC} Running PHP STAN with image: ${GR}$INPUT_PHP_IMAGE${NC}"
 echo -e "${BL}Info:${NC} STAN report path: ${GR}$INPUT_REPORT_PATH${NC}"
